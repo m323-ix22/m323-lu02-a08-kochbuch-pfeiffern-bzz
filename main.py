@@ -6,13 +6,13 @@ import json
 def load_recipe(json_string):
     return json.loads(json_string)
 
-def adjust_recipe(recipe_data, persons):
-    factor = persons / recipe_data['servings']
+def adjust_recipe(recipe_info, persons):
+    factor = persons / recipe_info['servings']
     adjusted_ingredients = {
-        ingredient: int(amount * factor) for ingredient, amount in recipe_data['ingredients'].items()
+        ingredient: int(amount * factor) for ingredient, amount in recipe_info['ingredients'].items()
     }
     return {
-        'title': recipe_data['title'],
+        'title': recipe_info['title'],
         'ingredients': adjusted_ingredients,
         'servings': persons
     }
@@ -27,5 +27,5 @@ if __name__ == '__main__':
 
     adjusted_recipe = adjust_recipe(recipe_data, 2)
 
-    print("Angepasstes Rezept:")
+    print('Angepasstes Rezept:')
     print(json.dumps(adjusted_recipe, indent=4))
