@@ -6,21 +6,26 @@ import json
 def load_recipe(json_string):
     return json.loads(json_string)
 
-def adjust_recipe(recipe, persons):
-    factor = persons / recipe['servings']
-    adjusted_ingredients = {ingredient: int(amount * factor) for ingredient, amount in recipe['ingredients'].items()}
+def adjust_recipe(recipe_data, persons):
+    factor = persons / recipe_data['servings']
+    adjusted_ingredients = {
+        ingredient: int(amount * factor) for ingredient, amount in recipe_data['ingredients'].items()
+    }
     return {
-        "title": recipe['title'],
-        "ingredients": adjusted_ingredients,
-        "servings": persons
+        'title': recipe_data['title'],
+        'ingredients': adjusted_ingredients,
+        'servings': persons
     }
 
 if __name__ == '__main__':
-    recipe_json = '{"title": "Spaghetti Bolognese", "ingredients": {"Spaghetti": 400, "Tomato Sauce": 300, "Minced Meat": 500}, "servings": 4}'
+    recipe_json = (
+        '{"title": "Spaghetti Bolognese", "ingredients": {"Spaghetti": 400, '
+        '"Tomato Sauce": 300, "Minced Meat": 500}, "servings": 4}'
+    )
 
-    recipe = load_recipe(recipe_json)
+    recipe_data = load_recipe(recipe_json)
 
-    adjusted_recipe = adjust_recipe(recipe, 2)
+    adjusted_recipe = adjust_recipe(recipe_data, 2)
 
     print("Angepasstes Rezept:")
     print(json.dumps(adjusted_recipe, indent=4))
